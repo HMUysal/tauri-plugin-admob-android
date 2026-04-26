@@ -1,0 +1,10 @@
+
+[[permission]]
+identifier = "allow-load-banner"
+description = "Enables the load_banner command."
+commands.allow = ["load_banner"]
+
+[[permission]]
+identifier = "deny-load-banner"
+description = "Denies the load_banner command."
+commands.deny = ["load_banner"]

@@ -1,0 +1,10 @@
+
+[[permission]]
+identifier = "allow-load-interstitial"
+description = "Enables the load_interstitial command."
+commands.allow = ["load_interstitial"]
+
+[[permission]]
+identifier = "deny-load-interstitial"
+description = "Denies the load_interstitial command."
+commands.deny = ["load_interstitial"]

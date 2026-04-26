@@ -1,0 +1,3 @@
+[default]
+description = "Default permissions for the plugin"
+permissions = ["allow-ping", "allow-initialize", "allow-load-banner","allow-load-interstitial", "allow-request-consent"]

@@ -1,0 +1,10 @@
+
+[[permission]]
+identifier = "allow-request-consent"
+description = "Enables the request_consent command."
+commands.allow = ["request_consent"]
+
+[[permission]]
+identifier = "deny-request-consent"
+description = "Denies the request_consent command."
+commands.deny = ["request_consent"]

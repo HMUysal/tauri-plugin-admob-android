@@ -1,0 +1,151 @@
+<html>
+  <body>
+    <h1>AdMob Kontrol Paneli</h1>
+    <button id="init-btn">1. SDK Başlat</button>
+    <button id="r-btn">1. Request consent</button>
+    <button id="banner-btn">2. Banner Göster</button>
+    <button id="banner-btn2">2. Banner Göster</button>
+    <button id="interstitial-btn">
+      3. Geçiş Reklamı (Interstitial) Göster
+    </button>
+    <div
+      id="status"
+      style="
+        border: 1px solid #ccc;
+        padding: 10px;
+        margin-top: 20px;
+        font-family: monospace;
+        background: #eee;
+      "
+    ></div>
+
+    <script>
+      // Tauri 2.0 erişimi
+      const { invoke } = window.__TAURI__.core;
+
+      const initBtn = document.getElementById("init-btn");
+      const rBtn = document.getElementById("r-btn");
+      const bannerBtn = document.getElementById("banner-btn");
+      const bannerBtn2 = document.getElementById("banner-btn2");
+      const interstitialBtn = document.getElementById("interstitial-btn");
+      const statusDiv = document.getElementById("status");
+
+      // Logları ekrana basan yardımcı fonksiyon
+      let currentLogs = "";
+      const logToUI = (text) => {
+        currentLogs += text + "<br />";
+        statusDiv.innerHTML = currentLogs;
+        console.log(text); // Aynı zamanda tarayıcı konsoluna da bas
+      };
+
+      // 1. AdMob Başlatma
+      initBtn.addEventListener("click", async () => {
+        try {
+          initBtn.innerText = "İşlem Yapılıyor...";
+          logToUI("🚀 Başlatma isteği gönderildi...");
+
+          const res = await invoke("plugin:admob-android|initialize");
+
+          logToUI(`📩 Cevap Geldi: ${JSON.stringify(res)}`);
+
+          if (res && res.value) {
+            logToUI("✅ AdMob Hazır!");
+          } else {
+            logToUI("⚠️ SDK yüklendi ama hazır (ready) değil.");
+          }
+        } catch (e) {
+          logToUI(`❌ Hata: ${JSON.stringify(e)}`);
+          console.error(e);
+        } finally {
+          initBtn.innerText = "1. SDK Başlat";
+        }
+      });
+
+      rBtn.addEventListener("click", async () => {
+        try {
+          rBtn.innerText = "İzinler Kontrol Ediliyor...";
+          logToUI("🛡️ Kullanıcı rıza durumu sorgulanıyor...");
+
+          const res = await invoke("plugin:admob-android|request_consent");
+
+          logToUI(`📩 Yanıt: ${JSON.stringify(res)}`);
+
+          if (res && res.value) {
+            logToUI(
+              "✅ Rıza alındı veya gerekli değil. Reklam isteği atılabilir.",
+            );
+          } else {
+            logToUI(
+              "⚠️ Rıza formu onaylanmadı veya kısıtlı reklam modunda kalınacak.",
+            );
+          }
+        } catch (e) {
+          logToUI(`❌ Rıza Formu Hatası: ${JSON.stringify(e)}`);
+          console.error(e);
+        } finally {
+          rBtn.innerText = "0. Rıza Formunu Kontrol Et";
+        }
+      });
+      // 2. Banner Gösterimi
+      bannerBtn.addEventListener("click", async () => {
+        try {
+          logToUI("📡 Banner yükleme isteği gönderiliyor...");
+          await invoke("plugin:admob-android|load_banner", {
+            payload: {
+              position: "bottom",
+              adUnitId: "ca-app-pub-3940256099942544/6300978111",
+            },
+          });
+          logToUI("✅ Banner komutu başarıyla iletildi.");
+        } catch (e) {
+          logToUI(`❌ Banner Hatası: ${JSON.stringify(e)}`);
+        }
+      });
+      // 2. Banner Gösterimi
+      bannerBtn2.addEventListener("click", async () => {
+        try {
+          logToUI("📡 Banner yükleme isteği gönderiliyor...");
+          await invoke("plugin:admob-android|load_banner", {
+            payload: {
+              position: "top",
+              adUnitId: "ca-app-pub-3940256099942544/6300978111",
+            },
+          });
+          logToUI("✅ Banner komutu başarıyla iletildi.");
+        } catch (e) {
+          logToUI(`❌ Banner Hatası: ${JSON.stringify(e)}`);
+        }
+      });
+      interstitialBtn.addEventListener("click", async () => {
+        try {
+          interstitialBtn.innerText = "Reklam Yükleniyor...";
+          logToUI("📡 Geçiş reklamı yükleme isteği gönderiliyor...");
+
+          // Rust tarafındaki load_interstitial komutunu çağırıyoruz
+          const res = await invoke("plugin:admob-android|load_interstitial", {
+            // payload nesnesi Rust tarafındaki InterstitialRequest struct'ına denk gelir
+            payload: {
+              // Test ID'si kullandık, kendi ID'n varsa onu yazabilirsin
+              adUnitId: "ca-app-pub-3940256099942544/1033173712",
+            },
+          });
+
+          logToUI(`📩 Cevap Geldi: ${JSON.stringify(res)}`);
+
+          if (res && res.value === true) {
+            logToUI("✅ Geçiş reklamı başarıyla yüklendi ve gösterildi.");
+          } else {
+            logToUI(
+              "⚠️ Reklam yüklenemedi (success: false). Logları kontrol et.",
+            );
+          }
+        } catch (e) {
+          logToUI(`❌ Geçiş Reklamı Hatası: ${JSON.stringify(e)}`);
+          console.error(e);
+        } finally {
+          interstitialBtn.innerText = "3. Geçiş Reklamı (Interstitial) Göster";
+        }
+      });
+    </script>
+  </body>
+</html>

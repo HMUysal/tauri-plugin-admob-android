@@ -1,0 +1,32 @@
+{
+  "folders": [
+    {
+      "name": "ROOT (Plugin Project)",
+      "path": ".",
+    },
+    {
+      "name": "ANDROID (Kotlin Source)",
+      "path": "android",
+    },
+  ],
+  "settings": {
+    "java.import.gradle.enabled": true,
+    "java.import.gradle.wrapper.enabled": true,
+    "java.project.importHint": "gradle",
+    "kotlin.scripts.enabled": true,
+    "kotlin.indexing.enabled": true,
+    "java.configuration.updateBuildConfiguration": "interactive",
+  },
+  "extensions": {
+    "recommendations": [
+      "fwcd.kotlin",
+      "vscjava.vscode-java-pack",
+      "vscjava.vscode-gradle",
+      "rust-lang.rust-analyzer",
+      "tamasfe.even-better-toml",
+      "tauri-apps.tauri-vscode",
+      "dotjosh.vscode-xml",
+      "usernamehw.errorlens",
+    ],
+  },
+}
