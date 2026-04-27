@@ -74,8 +74,7 @@ tauri-plugin-admob-android = "0.1.8"
  ```
  
  ### Android Manifest
- Add your **AdMob App ID** and required permissions to `src-tauri/gen/android/app/src/main/AndroidManifest.xml`. 
- Replace `YOUR_ADMOB_APP_ID` with your actual ID from the AdMob dashboard. Or you can test it with Test ID `ca-app-pub-3940256099942544~3347511713`
+ Add your **AdMob App ID** and required permissions to `src-tauri/gen/android/app/src/main/AndroidManifest.xml`. Replace `YOUR_ADMOB_APP_ID` with your actual ID from the AdMob dashboard. Or you can test it with Test ID `ca-app-pub-3940256099942544~3347511713`
  
  ```xml
  <manifest>
