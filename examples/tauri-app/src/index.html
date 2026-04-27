@@ -1,0 +1,107 @@
+<html>
+  <body style="padding: 20px; font-family: sans-serif">
+    <div style="display: flex; gap: 10px; flex-wrap: wrap">
+      <button id="init-btn">Initialize</button>
+      <button id="rs-btn">Get Status</button>
+      <button id="r-btn">Request Consent</button>
+      <button id="cr-btn">Can Request Ads</button>
+      <button id="banner-top-btn">Banner Top</button>
+      <button id="banner-bottom-btn">Banner Bottom</button>
+      <button id="interstitial-btn">Show Interstitial</button>
+      <a href="/api.html">API Test</a>
+    </div>
+
+    <div
+      id="status"
+      style="
+        border: 1px solid #ccc;
+        padding: 10px;
+        margin-top: 20px;
+        font-family: monospace;
+        background: #eee;
+        min-height: 100px;
+        white-space: pre-wrap;
+      "
+    ></div>
+
+    <script>
+      const { invoke } = window.__TAURI__.core;
+
+      const logToUI = (text) => {
+        const statusDiv = document.getElementById("status");
+        statusDiv.innerHTML += text + "<br />";
+        console.log(text);
+      };
+
+      const CONSENT_STATUS_MAP = [
+        "UNKNOWN",
+        "REQUIRED",
+        "NOT_REQUIRED",
+        "OBTAINED",
+      ];
+
+      async function handleAction(label, command, payload = null) {
+        try {
+          logToUI(`[${label}] Request sent...`);
+          const res = await invoke(
+            `plugin:admob-android|${command}`,
+            payload ? { payload } : {},
+          );
+          logToUI(`[${label}] Response: ${JSON.stringify(res)}`);
+          return res;
+        } catch (e) {
+          logToUI(`[${label}] Error: ${JSON.stringify(e)}`);
+          console.error(e);
+        }
+      }
+
+      document
+        .getElementById("init-btn")
+        .addEventListener("click", () => handleAction("Init", "initialize"));
+
+      document.getElementById("rs-btn").addEventListener("click", async () => {
+        const res = await handleAction("Status", "get_consent_status");
+        if (res && res.value !== undefined) {
+          const statusText = CONSENT_STATUS_MAP[res.value] || "UNKNOWN";
+          logToUI(`Status Result: ${statusText}`);
+        }
+      });
+
+      document
+        .getElementById("r-btn")
+        .addEventListener("click", () =>
+          handleAction("Consent", "request_consent"),
+        );
+
+      document
+        .getElementById("cr-btn")
+        .addEventListener("click", () =>
+          handleAction("Check", "can_request_ads"),
+        );
+
+      document.getElementById("banner-top-btn").addEventListener("click", () =>
+        handleAction("Banner", "load_banner", {
+          position: "top",
+          adUnitId: "ca-app-pub-3940256099942544/6300978111",
+        }),
+      );
+
+      document
+        .getElementById("banner-bottom-btn")
+        .addEventListener("click", () =>
+          handleAction("Banner", "load_banner", {
+            position: "bottom",
+            adUnitId: "ca-app-pub-3940256099942544/6300978111",
+          }),
+        );
+
+      document
+        .getElementById("interstitial-btn")
+        .addEventListener("click", () =>
+          handleAction("Interstitial", "load_interstitial", {
+            adUnitId: "ca-app-pub-3940256099942544/1033173712",
+          }),
+        );
+    </script>
+  </body>
+</html>
