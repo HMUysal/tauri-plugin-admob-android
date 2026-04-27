@@ -1,6 +1,6 @@
 {
   "name": "tauri-plugin-admob-android-api",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "type": "module",
   "main": "./index.js",
   "module": "./index.js",
@@ -13,6 +13,7 @@
   "license": "MIT",
   "files": [
     "index.js",
+    "index.d.ts",
     "src",
     "android",
     "permissions",
