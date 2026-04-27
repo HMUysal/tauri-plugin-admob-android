@@ -1,0 +1,36 @@
+{
+  "name": "@hmuysal/tauri-plugin-admob-android",
+  "version": "0.1.0",
+  "description": "AdMob integration for Tauri Android applications.",
+  "author": "Mehmet Uysal",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HMUysal/tauri-plugin-admob-android.git"
+  },
+  "bugs": {
+    "url": "https://github.com/HMUysal/tauri-plugin-admob-android/issues"
+  },
+  "homepage": "https://github.com/HMUysal/tauri-plugin-admob-android#readme",
+  "keywords": [
+    "tauri",
+    "plugin",
+    "admob",
+    "android",
+    "mobile",
+    "ads"
+  ],
+  "files": [
+    "src-tauri",
+    "README.md",
+    "package.json"
+  ],
+  "tauri": {
+    "plugin": {
+      "name": "admob-android"
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
