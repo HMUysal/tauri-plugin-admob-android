@@ -36,8 +36,10 @@ export async function requestConsent() {
  */
 export async function loadBanner({ position = "bottom", adUnitId }) {
   return await invoke("plugin:admob-android|load_banner", {
-    position,
-    adUnitId,
+    payload: {
+      position,
+      adUnitId,
+    },
   });
 }
 
@@ -49,6 +51,8 @@ export async function loadBanner({ position = "bottom", adUnitId }) {
  */
 export async function loadInterstitial({ adUnitId }) {
   return await invoke("plugin:admob-android|load_interstitial", {
-    adUnitId,
+    payload: {
+      adUnitId,
+    },
   });
 }
