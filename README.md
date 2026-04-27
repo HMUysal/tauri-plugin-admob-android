@@ -74,7 +74,8 @@ tauri-plugin-admob-android = "0.1.8"
  ```
  
  ### Android Manifest
- Add your **AdMob App ID** and required permissions to `src-tauri/gen/android/app/src/main/AndroidManifest.xml`. Replace `YOUR_ADMOB_APP_ID` with your actual ID from the AdMob dashboard. Or you can test it with Test ID `ca-app-pub-3940256099942544~3347511713`
+ Add your **AdMob App ID** and required permissions to `src-tauri/gen/android/app/src/main/AndroidManifest.xml`. 
+ Replace `YOUR_ADMOB_APP_ID` with your actual ID from the AdMob dashboard. Or you can test it with Test ID `ca-app-pub-3940256099942544~3347511713`
  
  ```xml
  <manifest>
@@ -91,27 +92,52 @@ tauri-plugin-admob-android = "0.1.8"
  ```
  
  ## Usage
- 
+
  ```javascript
- import {} from 'tauri-plugin-admob-android-api';
- 
-  // 1. Initialize AdMob SDK
+ import {
+   initialize,
+   requestConsent,
+   getConsentStatus,
+   canRequestAds,
+   loadBanner,
+   loadInterstitial
+ } from 'tauri-plugin-admob-android-api';
+
+  1. Initialize AdMob SDK
  await initialize();
- 
- // 2. Request Consent (GDPR/UMP)
- await requestConsent();
- 
- // 3 Show Ad
- //     3.a Display a Banner Ad
- await loadBanner({
-   position: 'bottom',
-   adUnitId: 'ca-app-pub-3940256099942544/6300978111' 
- });
- //     3.b Display a Banner Ad
- await loadInterstitial({
-   adUnitId: 'ca-app-pub-3940256099942544/6300978111' 
- });
+
+  2. Check and Request Consent (GDPR/UMP)
+ const status = await getConsentStatus();
+ console.log(Current Consent Status: ${status});
+
+ if (status === 'REQUIRED') {
+   await requestConsent();
+ }
+
+  3. Check if ads can be requested
+ const canShow = await canRequestAds();
+
+ if (canShow) {
+    4. Show Ads
+
+
+    Display a Banner Ad at the bottom
+   await loadBanner({
+     position: 'bottom',
+     adUnitId: 'ca-app-pub-3940256099942544/6300978111'
+   });
+
+    Display an Interstitial Ad (Full-screen)
+   await loadInterstitial({
+     adUnitId: 'ca-app-pub-3940256099942544/1033173712'
+   });
+ }
  ```
+ ## Thanks
+
+ Special thanks to the [tauri-plugin-cache](https://github.com/Taiizor/tauri-plugin-cache) project.  
+ This plugin was developed by referencing its `README.md`, `package.json`, and `Cargo.toml` structure,
+ which served as a valuable guide for implementing the Tauri 2.0 plugin architecture.
  
  ## License
  MIT
