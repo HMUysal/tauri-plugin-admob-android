@@ -113,20 +113,5 @@ tauri-plugin-admob-android = "0.1.8"
  });
  ```
  
- ## Permissions
- 
- Add the following to your `src-tauri/capabilities/default.json` to allow the plugin to run:
- 
- ```json
- {
-   "permissions": [
-     "admob-android:allow-initialize",
-     "admob-android:allow-request-consent",
-     "admob-android:allow-load-banner",
-     "admob-android:allow-load-interstitial"
-   ]
- }
- ```
- 
  ## License
  MIT
