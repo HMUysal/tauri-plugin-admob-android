@@ -1,12 +1,12 @@
 [package]
 name = "tauri-plugin-admob-android"
-version = "0.1.5"
+version = "0.1.6"
+links = "tauri-plugin-admob-android"
 authors = ["Mehmet Uysal"]
 description = "A Tauri plugin for AdMob integration on Android"
 edition = "2021"
 license = "MIT"
 readme = "README.md"
-links = "tauri-plugin-admob-android"
 exclude = ["/examples", "/node_modules", "/target"]
 
 [dependencies]
