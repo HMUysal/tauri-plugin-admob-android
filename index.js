@@ -1,4 +1,10 @@
 import { invoke } from "@tauri-apps/api/core";
+export const CONSENT_STATUS_MAP = [
+  /* 0 */ "UNKNOWN",
+  /* 1 */ "NOT_REQUIRED",
+  /* 2 */ "REQUIRED",
+  /* 3 */ "OBTAINED",
+];
 
 /**
  * Test command to check if the plugin is responsive.
@@ -17,6 +23,24 @@ export async function ping(value) {
  */
 export async function initialize() {
   return await invoke("plugin:admob-android|initialize");
+}
+
+/**
+ * Checks if ads can be requested based on the current consent status.
+ * @returns {Promise<{value: boolean}>}
+ */
+export async function canRequestAds() {
+  return await invoke("plugin:admob-android|can_request_ads");
+}
+
+/**
+ * Gets the current consent status (UNKNOWN, REQUIRED, NOT_REQUIRED, OBTAINED).
+ * @returns {Promise<{status: number}>}
+ */
+export async function getConsentStatus() {
+  const { value } = await invoke("plugin:admob-android|get_consent_status");
+  // Gelen sayısal sonucu listeden string karşılığına çeviriyoruz
+  return CONSENT_STATUS_MAP[value] || "UNKNOWN";
 }
 
 /**

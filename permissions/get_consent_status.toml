@@ -1,0 +1,10 @@
+
+[[permission]]
+identifier = "allow-get-consent-status"
+description = "Enables the get_consent_status command."
+commands.allow = ["get_consent_status"]
+
+[[permission]]
+identifier = "deny-get-consent-status"
+description = "Denies the get_consent_status command."
+commands.deny = ["get_consent_status"]

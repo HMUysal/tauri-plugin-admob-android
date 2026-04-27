@@ -34,7 +34,7 @@ impl<R: Runtime> AdmobAndroid<R> {
 }
 
 impl<R: Runtime> AdmobAndroid<R> {
-  pub fn initialize(&self) -> crate::Result<InitializeResponse> {
+  pub fn initialize(&self) -> crate::Result<BooleanResponse> {
     self
       .0
       .run_mobile_plugin("initialize", ())
@@ -43,7 +43,25 @@ impl<R: Runtime> AdmobAndroid<R> {
 }
 
 impl<R: Runtime> AdmobAndroid<R> {
-  pub fn request_consent(&self) -> crate::Result<RequestConsentResponse> {
+  pub fn can_request_ads(&self) -> crate::Result<BooleanResponse> {
+    self
+      .0
+      .run_mobile_plugin("can_request_ads", ())
+      .map_err(Into::into)
+  }
+}
+
+impl<R: Runtime> AdmobAndroid<R> {
+  pub fn get_consent_status(&self) -> crate::Result<NumberResponse> {
+    self
+      .0
+      .run_mobile_plugin("get_consent_status", ())
+      .map_err(Into::into)
+  }
+}
+
+impl<R: Runtime> AdmobAndroid<R> {
+  pub fn request_consent(&self) -> crate::Result<BooleanResponse> {
     self
       .0
       .run_mobile_plugin("request_consent", ())
@@ -52,7 +70,7 @@ impl<R: Runtime> AdmobAndroid<R> {
 }
 
 impl<R: Runtime> AdmobAndroid<R> {
-  pub fn load_banner(&self, payload: LoadBannerRequest) -> crate::Result<LoadBannerResponse> {
+  pub fn load_banner(&self, payload: LoadBannerRequest) -> crate::Result<BooleanResponse> {
     self
       .0
       .run_mobile_plugin("load_banner", payload)
@@ -61,7 +79,7 @@ impl<R: Runtime> AdmobAndroid<R> {
 }
 
 impl<R: Runtime> AdmobAndroid<R> {
-  pub fn load_interstitial(&self, payload: InterstitialRequest) -> crate::Result<InterstitialResponse> {
+  pub fn load_interstitial(&self, payload: InterstitialRequest) -> crate::Result<BooleanResponse> {
     self
       .0
       .run_mobile_plugin("load_interstitial", payload)

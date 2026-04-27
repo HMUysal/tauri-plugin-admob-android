@@ -1,0 +1,10 @@
+
+[[permission]]
+identifier = "allow-can-request-ads"
+description = "Enables the can_request_ads command."
+commands.allow = ["can_request_ads"]
+
+[[permission]]
+identifier = "deny-can-request-ads"
+description = "Denies the can_request_ads command."
+commands.deny = ["can_request_ads"]

@@ -1,5 +1,5 @@
 use serde::de::DeserializeOwned;
-use tauri::{plugin::PluginApi, AppHandle, Runtime};
+use tauri::{AppHandle, Runtime, plugin::PluginApi, utils::acl::Number};
 
 use crate::models::*;
 
@@ -19,23 +19,33 @@ impl<R: Runtime> AdmobAndroid<R> {
       value: payload.value,
     })
   }
-  pub fn initialize(&self) -> crate::Result<InitializeResponse> {
-    Ok(InitializeResponse {
+  pub fn initialize(&self) -> crate::Result<BooleanResponse> {
+    Ok(BooleanResponse {
       value: Some(false),
     })
   }
-  pub fn request_consent(&self) -> crate::Result<RequestConsentResponse> {
-    Ok(RequestConsentResponse {
+  pub fn can_request_ads(&self) -> crate::Result<BooleanResponse> {
+    Ok(BooleanResponse {
       value: Some(false),
     })
   }
-  pub fn load_banner(&self, payload: LoadBannerRequest) -> crate::Result<LoadBannerResponse> {
-    Ok(LoadBannerResponse {
+  pub fn get_consent_status(&self) -> crate::Result<NumberResponse> {
+    Ok(NumberResponse {
+      value: 0,
+    })
+  }
+  pub fn request_consent(&self) -> crate::Result<BooleanResponse> {
+    Ok(BooleanResponse {
       value: Some(false),
     })
   }
-  pub fn load_interstitial(&self, payload: InterstitialRequest) -> crate::Result<InterstitialResponse> {
-    Ok(InterstitialResponse {
+  pub fn load_banner(&self, payload: LoadBannerRequest) -> crate::Result<BooleanResponse> {
+    Ok(BooleanResponse {
+      value: Some(false),
+    })
+  }
+  pub fn load_interstitial(&self, payload: InterstitialRequest) -> crate::Result<BooleanResponse> {
+    Ok(BooleanResponse {
       value: Some(false),
     })
   }

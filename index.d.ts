@@ -4,6 +4,15 @@
 export type AdPosition = "top" | "bottom";
 
 /**
+ * Consent status as strings.
+ */
+export type ConsentStatus =
+  | /* 0 */ "UNKNOWN"
+  | /* 1 */ "NOT_REQUIRED"
+  | /* 2 */ "REQUIRED"
+  | /* 3 */ "OBTAINED";
+
+/**
  * Standard response wrapper for boolean results.
  */
 export interface BooleanResponse {
@@ -18,6 +27,15 @@ export interface StringResponse {
 }
 
 /**
+ * Consent status mapping.
+ */
+export const CONSENT_STATUS_MAP: [
+  /* 0 */ "UNKNOWN",
+  /* 1 */ "NOT_REQUIRED",
+  /* 2 */ "REQUIRED",
+  /* 3 */ "OBTAINED",
+];
+/**
  * Test command to check if the plugin is responsive.
  */
 export function ping(value?: string): Promise<StringResponse>;
@@ -26,6 +44,16 @@ export function ping(value?: string): Promise<StringResponse>;
  * Initializes the AdMob SDK and setup the consent process.
  */
 export function initialize(): Promise<BooleanResponse>;
+
+/**
+ * Checks if ads can be requested based on consent.
+ */
+export function canRequestAds(): Promise<BooleanResponse>;
+
+/**
+ * Gets the current consent status from the SDK.
+ */
+export function getConsentStatus(): Promise<ConsentStatus>;
 
 /**
  * Requests user consent for personalized ads (GDPR/UMP).

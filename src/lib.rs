@@ -38,6 +38,8 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
     .invoke_handler(tauri::generate_handler![
         commands::ping,
         commands::initialize,
+        commands::can_request_ads,
+        commands::get_consent_status,
         commands::request_consent,
         commands::load_banner,
         commands::load_interstitial,

@@ -1,3 +1,11 @@
 [default]
 description = "Default permissions for the plugin"
-permissions = ["allow-ping", "allow-initialize", "allow-load-banner","allow-load-interstitial", "allow-request-consent"]
+permissions = [
+  "allow-ping",
+  "allow-initialize",
+  "allow-can-request-ads",
+  "allow-get-consent-status",
+  "allow-load-banner",
+  "allow-load-interstitial",
+  "allow-request-consent"
+]

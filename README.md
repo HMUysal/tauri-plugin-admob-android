@@ -84,7 +84,7 @@ tauri-plugin-admob-android = "0.1.8"
              android:value="YOUR_ADMOB_APP_ID"/>
      </application>
  
-          <uses-permission android:name="com.google.android.gms.permission.AD_ID"/>
+     <uses-permission android:name="com.google.android.gms.permission.AD_ID"/>
      <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
      <uses-permission android:name="android.permission.INTERNET" />
  </manifest>

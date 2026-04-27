@@ -15,14 +15,28 @@ pub(crate) async fn ping<R: Runtime>(
 #[command]
 pub(crate) async fn initialize<R: Runtime>(
     app: AppHandle<R>,
-) -> Result<InitializeResponse> {
+) -> Result<BooleanResponse> {
     app.admob_android().initialize()
+}
+
+#[command]
+pub(crate) async fn can_request_ads<R: Runtime>(
+    app: AppHandle<R>,
+) -> Result<BooleanResponse> {
+    app.admob_android().can_request_ads()
+}
+
+#[command]
+pub(crate) async fn get_consent_status<R: Runtime>(
+    app: AppHandle<R>,
+) -> Result<NumberResponse> {
+    app.admob_android().get_consent_status()
 }
 
 #[command]
 pub(crate) async fn request_consent<R: Runtime>(
     app: AppHandle<R>,
-) -> Result<RequestConsentResponse> {
+) -> Result<BooleanResponse> {
     app.admob_android().request_consent()
 }
 
@@ -30,7 +44,7 @@ pub(crate) async fn request_consent<R: Runtime>(
 pub(crate) async fn load_banner<R: Runtime>(
     app: AppHandle<R>,
     payload: LoadBannerRequest,
-) -> Result<LoadBannerResponse> {
+) -> Result<BooleanResponse> {
     app.admob_android().load_banner(payload)
 }
 
@@ -39,6 +53,6 @@ pub(crate) async fn load_banner<R: Runtime>(
 pub(crate) async fn load_interstitial<R: Runtime>(
     app: AppHandle<R>,
     payload: InterstitialRequest,
-) -> Result<InterstitialResponse> {
+) -> Result<BooleanResponse> {
     app.admob_android().load_interstitial(payload)
 }

@@ -46,6 +46,39 @@ class AdmobAndroidPlugin(private val activity: Activity): Plugin(activity) {
         }
     }
 
+    @Command
+    fun can_request_ads(invoke: Invoke) {
+        CoroutineScope(Dispatchers.Main).launch {
+            try {
+                val canRequest = implementation.canRequestAds(activity)
+
+                val res = JSObject()
+                res.put("value", canRequest)
+                invoke.resolve(res)
+            } catch (e: Exception) {
+                Log.e("AdMob", "CanRequestAds error", e)
+                invoke.reject(e.message)
+            }
+        }
+    }
+
+    @Command
+    fun get_consent_status(invoke: Invoke) {
+        CoroutineScope(Dispatchers.Main).launch {
+            try {
+                val status = implementation.getConsentStatus(activity)
+
+                Log.d("AdMob", "📥 Current Consent Status (Raw): $status")
+
+                val res = JSObject()
+                res.put("value", status)
+                invoke.resolve(res)
+            } catch (e: Exception) {
+                Log.e("AdMob", "Consent status error", e)
+                invoke.reject(e.message)
+            }
+        }
+    }
 
     @Command
     fun request_consent(invoke: Invoke) {
@@ -57,7 +90,7 @@ class AdmobAndroidPlugin(private val activity: Activity): Plugin(activity) {
                 res.put("value", isReady)
                 invoke.resolve(res)
             } catch (e: Exception) {
-                Log.e("AdMob", "Initialization error", e)
+                Log.e("AdMob", "Consent error", e)
                 invoke.reject(e.message)
             }
         }
@@ -65,33 +98,41 @@ class AdmobAndroidPlugin(private val activity: Activity): Plugin(activity) {
 
     @Command
     fun load_banner(invoke: Invoke) {
-        val args = invoke.parseArgs(BannerArgs::class.java)
-        val adUnitId = args.adUnitId ?: "ca-app-pub-3940256099942544/6300978111"
-        val postion = args.position ?: "bottom"
-        CoroutineScope(Dispatchers.Main).launch {
-            try {
-                val success = implementation.loadBanner(activity, postion, adUnitId)
+        try {
+            val args = invoke.parseArgs(BannerArgs::class.java)
+            val adUnitId = args.adUnitId ?: "ca-app-pub-3940256099942544/6300978111"
+            val position = args.position ?: "bottom"
+            CoroutineScope(Dispatchers.Main).launch {
+                try {
+                    val success = implementation.loadBanner(activity, position, adUnitId)
 
-                val ret = JSObject()
-                ret.put("value", success)
-                invoke.resolve(ret)
+                    val ret = JSObject()
+                    ret.put("value", success)
+                    invoke.resolve(ret)
 
-            } catch (e: Exception) {
-                invoke.reject(e.message)
+                } catch (e: Exception) {
+                    invoke.reject(e.message)
+                }
             }
+        } catch (e: Exception) {
+            invoke.reject("Invalid arguments")
         }
     }
 
     @Command
     fun load_interstitial(invoke: Invoke) {
-        val args = invoke.parseArgs(InterstitialRequest::class.java)
-        val adUnitId = args.adUnitId ?: "ca-app-pub-3940256099942544/1033173712"
+        try {
+            val args = invoke.parseArgs(InterstitialRequest::class.java)
+            val adUnitId = args.adUnitId ?: "ca-app-pub-3940256099942544/1033173712"
 
-        CoroutineScope(Dispatchers.Main).launch {
-            val success = implementation.loadInterstitial(activity, adUnitId)
-            val ret = JSObject()
-            ret.put("value", success)
-            invoke.resolve(ret)
+            CoroutineScope(Dispatchers.Main).launch {
+                val success = implementation.loadInterstitial(activity, adUnitId)
+                val ret = JSObject()
+                ret.put("value", success)
+                invoke.resolve(ret)
+            }
+        } catch (e: Exception) {
+            invoke.reject("Invalid arguments")
         }
     }
 

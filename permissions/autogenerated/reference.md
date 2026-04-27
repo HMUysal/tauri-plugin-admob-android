@@ -6,6 +6,8 @@ Default permissions for the plugin
 
 - `allow-ping`
 - `allow-initialize`
+- `allow-can-request-ads`
+- `allow-get-consent-status`
 - `allow-load-banner`
 - `allow-load-interstitial`
 - `allow-request-consent`
@@ -41,6 +43,58 @@ Enables the ping command without any pre-configured scope.
 <td>
 
 Denies the ping command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`admob-android:allow-can-request-ads`
+
+</td>
+<td>
+
+Enables the can_request_ads command.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`admob-android:deny-can-request-ads`
+
+</td>
+<td>
+
+Denies the can_request_ads command.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`admob-android:allow-get-consent-status`
+
+</td>
+<td>
+
+Enables the get_consent_status command.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`admob-android:deny-get-consent-status`
+
+</td>
+<td>
+
+Denies the get_consent_status command.
 
 </td>
 </tr>
